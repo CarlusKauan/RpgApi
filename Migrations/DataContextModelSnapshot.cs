@@ -66,6 +66,30 @@ namespace RpgApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("RpgApi.Models.Disputa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AtacanteId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DataDisputa")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Narracao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OponenteId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Disputas");
+                });
+
             modelBuilder.Entity("RpgApi.Models.Habilidade", b =>
                 {
                     b.Property<int>("Id")
@@ -117,6 +141,12 @@ namespace RpgApi.Migrations
                     b.Property<int>("Defesa")
                         .HasColumnType("int");
 
+                    b.Property<int>("Derrotas")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Disputas")
+                        .HasColumnType("int");
+
                     b.Property<int>("Forca")
                         .HasColumnType("int");
 
@@ -135,6 +165,9 @@ namespace RpgApi.Migrations
                     b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Vitorias")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UsuarioId");
@@ -147,70 +180,91 @@ namespace RpgApi.Migrations
                             Id = 1,
                             Classe = 0,
                             Defesa = 10,
+                            Derrotas = 0,
+                            Disputas = 0,
                             Forca = 10,
                             Inteligencia = 10,
                             Nome = "Frodo",
-                            PontosVida = 100
+                            PontosVida = 100,
+                            Vitorias = 0
                         },
                         new
                         {
                             Id = 2,
                             Classe = 1,
                             Defesa = 25,
+                            Derrotas = 0,
+                            Disputas = 0,
                             Forca = 15,
                             Inteligencia = 30,
                             Nome = "Sam",
-                            PontosVida = 100
+                            PontosVida = 100,
+                            Vitorias = 0
                         },
                         new
                         {
                             Id = 3,
                             Classe = 3,
                             Defesa = 21,
+                            Derrotas = 0,
+                            Disputas = 0,
                             Forca = 18,
                             Inteligencia = 35,
                             Nome = "Galadriel",
-                            PontosVida = 100
+                            PontosVida = 100,
+                            Vitorias = 0
                         },
                         new
                         {
                             Id = 4,
                             Classe = 2,
                             Defesa = 18,
+                            Derrotas = 0,
+                            Disputas = 0,
                             Forca = 18,
                             Inteligencia = 37,
                             Nome = "Gandalf",
-                            PontosVida = 100
+                            PontosVida = 100,
+                            Vitorias = 0
                         },
                         new
                         {
                             Id = 5,
                             Classe = 1,
                             Defesa = 17,
+                            Derrotas = 0,
+                            Disputas = 0,
                             Forca = 20,
                             Inteligencia = 31,
                             Nome = "Hobbit",
-                            PontosVida = 100
+                            PontosVida = 100,
+                            Vitorias = 0
                         },
                         new
                         {
                             Id = 6,
                             Classe = 3,
                             Defesa = 13,
+                            Derrotas = 0,
+                            Disputas = 0,
                             Forca = 21,
                             Inteligencia = 34,
                             Nome = "Celeborn",
-                            PontosVida = 100
+                            PontosVida = 100,
+                            Vitorias = 0
                         },
                         new
                         {
                             Id = 7,
                             Classe = 2,
                             Defesa = 11,
+                            Derrotas = 0,
+                            Disputas = 0,
                             Forca = 25,
                             Inteligencia = 35,
                             Nome = "Radagast",
-                            PontosVida = 100
+                            PontosVida = 100,
+                            Vitorias = 0
                         });
                 });
 
@@ -263,7 +317,6 @@ namespace RpgApi.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Perfil")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("Jogador");

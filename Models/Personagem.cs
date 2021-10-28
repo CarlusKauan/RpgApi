@@ -23,7 +23,9 @@ namespace RpgApi.Models
         public Arma Arma { get; set; }
         public List<PersonagemHabilidade> PersonagemHabilidades { get; set; }
 
-
+        public int Disputas { get; set; }
+        public int Vitorias { get; set; }
+        public int Derrotas { get; set; }
 
 
 
