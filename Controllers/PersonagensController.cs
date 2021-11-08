@@ -215,6 +215,75 @@ namespace RpgApi.Controllers
             }
         }
 
+        [HttpPut("RestaurarPontosVida")] 
+        public async Task<IActionResult> RestaurarPontosVidaAsync(Personagem p) 
+        { 
+        try
+            { 
+                int linhasAfetadas = 0; 
+                Personagem pEncontrado = 
+                await _context.Personagens.FirstOrDefaultAsync(pBusca => pBusca.Id == p.Id); 
+                pEncontrado.PontosVida = 100; 
+                bool atualizou = await TryUpdateModelAsync<Personagem>(pEncontrado, "p", 
+                pAtualizar => pAtualizar.PontosVida); 
+            
+                // EF vai detectar e atualizar apenas as colunas que foram alteradas.
+                if (atualizou) 
+                linhasAfetadas = await _context.SaveChangesAsync(); 
+                return Ok(linhasAfetadas); 
+            } 
+            catch (System.Exception ex) 
+            { 
+            return BadRequest(ex.Message); 
+            } 
+        } 
+
+        [HttpPut("ZerarRanking")] 
+        public async Task<IActionResult> ZerarRankingAsync(Personagem p) 
+    { 
+        try
+    { 
+        Personagem pEncontrado = 
+        await _context.Personagens.FirstOrDefaultAsync(pBusca => pBusca.Id == p.Id); 
+        pEncontrado.Disputas = 0; 
+        pEncontrado.Vitorias = 0; 
+        pEncontrado.Derrotas = 0; 
+        int linhasAfetadas = 0; 
+        bool atualizou = await TryUpdateModelAsync<Personagem>(pEncontrado, "p", 
+        pAtualizar => pAtualizar.Disputas, 
+        pAtualizar => pAtualizar.Vitorias, 
+        pAtualizar => pAtualizar.Derrotas); 
+         // EF vai detectar e atualizar apenas as colunas que foram alteradas.
+        
+        if (atualizou) 
+        linhasAfetadas = await _context.SaveChangesAsync(); 
+        return Ok(linhasAfetadas); 
+ } 
+        catch (System.Exception ex) 
+    { 
+        return BadRequest(ex.Message); 
+    } 
+ }
+
+ [HttpPut("ZerarRankingRestaurarVidas")] 
+ public async Task<IActionResult> ZerarRankingRestaurarVidasAsync() 
+ { 
+    try
+    {    
+        List<Personagem> lista = 
+        await _context.Personagens.ToListAsync(); 
+        foreach (Personagem p in lista) 
+        { 
+            await ZerarRankingAsync(p); 
+            await RestaurarPontosVidaAsync(p); 
+        }          
+            return Ok(); 
+        } 
+        catch (System.Exception ex) 
+        {     
+            return BadRequest(ex.Message); 
+        }   
+    }
 
     }
 }
